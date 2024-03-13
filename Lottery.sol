@@ -22,4 +22,8 @@ contract Lottery{
         return address(this).balance;
     }
 
+    function random() internal view returns(uint){
+        return uint(keccak256(abi.encodePacked(block.prevrandao,block.timestamp,players.length)));
+    }
+
 }
