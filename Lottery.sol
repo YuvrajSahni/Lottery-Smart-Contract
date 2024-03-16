@@ -26,4 +26,15 @@ contract Lottery{
         return uint(keccak256(abi.encodePacked(block.prevrandao,block.timestamp,players.length)));
     }
 
+    function pickWinner() public {
+        require(manager==msg.sender,"You are not the manager");
+        require(players.length>=3,"Players are less than 3");
+
+        uint r = random();
+        uint index = r%players.length;
+        winner = players[index];
+        winner.transfer(getBalance());
+        players = new address payable[](0); //This will initialize the array back to 0
+    }
+
 }
